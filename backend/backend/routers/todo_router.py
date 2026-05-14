@@ -25,7 +25,10 @@ TodoNotFound = {
 @router.post(
     path="",
     summary="Create a new Todo",
-    description="This endpoint will create a new Todo using the info that is passed in and then return it.",
+    description=(
+        "This endpoint will create a new Todo using the info that is passed in,"
+        "then it will return it with the new Mongo ID included."
+    ),
     response_model=Todo,
     status_code=200,
 )
@@ -55,7 +58,10 @@ async def get_all_todos(user: Annotated[User, Depends(get_current_user)]):
 @router.delete(
     path="/all",
     summary="Delete all Todos",
-    description="This endpoint will DELETE ALL Todos. This should not be used except for testing!",
+    description=(
+        "This endpoint will DELETE ALL Todos."
+        "This should not be used except for testing!"
+    ),
     response_model=dict,
     status_code=200,
 )
@@ -70,7 +76,9 @@ async def delete_all_todos(_: Annotated[User, Depends(get_current_user)]):
 @router.get(
     path="/{id}",
     summary="Get Todo by id",
-    description="This endpoint will return the Todo dictionary, if found, based on the passed in id",
+    description=(
+        "This endpoint will return the Todo dictionary based on the passed in id."
+    ),
     response_model=Todo,
     status_code=200,
     responses={404: TodoNotFound},
@@ -79,13 +87,16 @@ async def get_todo(
     _: Annotated[User, Depends(get_current_user)],
     todo: Todo = Depends(get_todo),
 ):
-    return todo
+    return todo.model_dump()
 
 
 @router.put(
     path="/{id}",
     summary="Update Todo by id",
-    description="This endpoint will try to find a Todo with the passed in id, then update and return the updated dictionary.",
+    description=(
+        "This endpoint will try to find a Todo with the passed in id,"
+        "then update and return the updated dictionary."
+    ),
     response_model=Todo,
     status_code=200,
     responses={404: TodoNotFound},
@@ -107,7 +118,7 @@ async def update_todo(
         raise e
     try:
         updated_todo = await todo.update({"$set": update})
-        return updated_todo
+        return updated_todo.model_dump()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unable to update todo: {str(e)}")
 

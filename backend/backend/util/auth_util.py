@@ -7,10 +7,11 @@ from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
 from backend.models.user import MongoUser as User
+from settings import settings
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-SECRET_KEY = "d594dd02eff8db4186b2ee6c45182c4cee8e6db0aa6844036db3e6f7d1c05df8"
+SECRET_KEY = settings.secret_key
 ALGORITHM = "HS256"
 
 

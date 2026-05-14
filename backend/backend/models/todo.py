@@ -10,7 +10,10 @@ class Todo(Document):
         description="The user id of the user that created this Todo",
     )
     description: str = Field(
-        description="The description of the todo. Generally, some info about it and maybe a list of things necessary to complete it.",
+        description=(
+            "The description of the todo."
+            "Generally, some info about it and maybe a list of tasks to complete it."
+        ),
         min_length=8,
         max_length=16384,
     )
@@ -40,7 +43,10 @@ class Todo(Document):
     )
     tags: Optional[List[str]] = Field(
         default=None,
-        description="A list of tags for the Todo. Could be used for grouping Todos, for example.",
+        description=(
+            "A list of tags for the Todo."
+            "Could be used for grouping Todos, for example."
+        ),
     )
     priority: Optional[int] = Field(
         default=None,
@@ -72,7 +78,10 @@ class Todo(Document):
 class UpdateTodo(BaseModel):
     description: Optional[str] = Field(
         default=None,
-        description="The description of the todo. Generally, some info about it and maybe a list of things necessary to complete it.",
+        description=(
+            "The description of the todo."
+            "Generally, some info about it and maybe a list of tasks to complete it."
+        ),
         min_length=8,
         max_length=16384,
     )

@@ -22,16 +22,35 @@ pydantic-settings = "^2.14.1"
 isort = "^8.0.1"
 black = "^26.3.1"
 poethepoet = "^0.45.0"
+flake8 = "^7.3.0"
+flake8-pyproject = "^1.2.4"
 
 [tool.poetry.requires-plugins]
 poethepoet = ">=0.45.0"
 
 [tool.poe.tasks.format]
-shell = "isort . && black ."
+shell = "isort backend && black backend"
+
+[tool.poe.tasks.lint]
+shell = "flake8 backend"
 
 [tool.poetry.scripts]
 start = "backend.main:start"
 
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+per-file-ignores = [
+    "__init__.py:F401",
+]
+exclude = [".venv", "__pycache__", "build", "dist"]
+count = true
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

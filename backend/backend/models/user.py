@@ -13,7 +13,10 @@ class RecoveryQuestions(BaseModel):
     )
     answer: str = Field(
         example="blue",
-        description="The HASHED answer the User entered for the question. Should NOT be the user's raw input!",
+        description=(
+            "The HASHED answer the User entered for the question."
+            "Should NOT be the user's raw input!"
+        ),
         min_length=1,
         max_length=128,
     )
@@ -33,7 +36,9 @@ class BaseUser(BaseModel):
     )
     recovery_questions: Optional[List[RecoveryQuestions]] = Field(
         default=None,
-        description="A list of recovery questions the User can use to recover their info.",
+        description=(
+            "A list of recovery questions the User can use to recover their info."
+        ),
     )
     creation_method: Optional[str] = Field(
         default=None,
@@ -44,7 +49,9 @@ class BaseUser(BaseModel):
 # BaseUser + validated, raw password, used for endpoint validation
 class CreateUser(BaseUser):
     password: str = Field(
-        description="The RAW password for the User! Should hashed before insert into MongoDB!",
+        description=(
+            "The RAW password for the User! Should hashed before insert into MongoDB!"
+        ),
         min_length=8,
         max_length=48,
     )
@@ -66,7 +73,9 @@ class CreateUser(BaseUser):
 class MongoUser(Document, BaseUser):
     password: str = Field(
         example="password",
-        description="The HASHED password for the User. Should NOT be the user's raw input!",
+        description=(
+            "The HASHED password for the User." "Should NOT be the user's raw input!"
+        ),
     )
 
 
@@ -84,13 +93,17 @@ class UpdateUser(BaseModel):
     )
     password: Optional[str] = Field(
         default=None,
-        description="The RAW password for the User! Should hashed before insert into MongoDB!",
+        description=(
+            "The RAW password for the User!" "Should hashed before insert into MongoDB!"
+        ),
         min_length=8,
         max_length=48,
     )
     recovery_questions: Optional[List[RecoveryQuestions]] = Field(
         default=None,
-        description="A list of recovery questions the User can use to recover their info.",
+        description=(
+            "A list of recovery questions the User can use to recover their info."
+        ),
     )
 
     model_config = ConfigDict(

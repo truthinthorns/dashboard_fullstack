@@ -59,7 +59,7 @@ def hourly_forecast_formatter(coords: str):
 async def get_user(id: PydanticObjectId) -> User:
     try:
         user = await User.get(id)
-        if user == None:
+        if user is None:
             raise HTTPException(status_code=404, detail="No user found with that id!")
         return user
     except Exception as e:
@@ -69,7 +69,7 @@ async def get_user(id: PydanticObjectId) -> User:
 async def get_todo(id: PydanticObjectId) -> Todo:
     try:
         todo = await Todo.get(id)
-        if todo == None:
+        if todo is None:
             raise HTTPException(status_code=404, detail="No todo found with that id!")
         return todo
     except Exception as e:

@@ -10,13 +10,11 @@ from backend.util.auth_util import (
     create_access_token,
     get_current_user,
 )
-from backend.util.util import get_todo
 
 router = APIRouter(
     prefix="/auth",
     tags=["Auth"],
 )
-
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
 
