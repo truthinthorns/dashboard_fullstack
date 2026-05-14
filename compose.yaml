@@ -1,0 +1,43 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    env_file:
+      - ./envs/mongo.env
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./envs/mongo.env
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/
+    depends_on:
+      - mongo
+
+  backend:
+    build:
+      context: ./dashboard_backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    
+  frontend:
+    build:
+      args:
+        VITE_API_URL: http://localhost:5000
+        VITE_WEATHER_URL: https://api.weather.gov
+      context: ./dashboard2
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
