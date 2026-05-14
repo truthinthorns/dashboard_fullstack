@@ -1,8 +1,10 @@
-from backend.models.user import CreateUser, MongoUser, UpdateUser
-from fastapi import APIRouter, HTTPException, Depends
 from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from backend.models.user import CreateUser, MongoUser, UpdateUser
+from backend.util.auth_util import get_current_user, get_password_hash
 from backend.util.util import get_user
-from backend.util.auth_util import get_password_hash, get_current_user
 
 router = APIRouter(
     prefix="/users",

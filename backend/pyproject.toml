@@ -16,11 +16,22 @@ python-multipart = "^0.0.20"
 PyJWT = "^2.10.1"
 passlib = "^1.7.4"
 bcrypt = "^4.3.0"
+pydantic-settings = "^2.14.1"
 
 [tool.poetry.group.dev.dependencies]
+isort = "^8.0.1"
+black = "^26.3.1"
+poethepoet = "^0.45.0"
+
+[tool.poetry.requires-plugins]
+poethepoet = ">=0.45.0"
+
+[tool.poe.tasks.format]
+shell = "isort . && black ."
 
 [tool.poetry.scripts]
 start = "backend.main:start"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

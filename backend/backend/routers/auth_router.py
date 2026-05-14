@@ -1,7 +1,8 @@
 from datetime import timedelta
-from fastapi import APIRouter, HTTPException, Depends, Response, status
-from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi.security import OAuth2PasswordRequestForm
 
 from backend.models.user import BaseUser
 from backend.util.auth_util import (
@@ -10,7 +11,6 @@ from backend.util.auth_util import (
     get_current_user,
 )
 from backend.util.util import get_todo
-
 
 router = APIRouter(
     prefix="/auth",

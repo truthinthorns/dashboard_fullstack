@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
+
 from backend.models.weather import Weather
 from backend.util.util import hourly_forecast_formatter
-
 
 router = APIRouter(
     prefix="/weather",

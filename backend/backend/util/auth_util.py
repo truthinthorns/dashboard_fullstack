@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from passlib.context import CryptContext
-import jwt
-from fastapi.security import OAuth2PasswordBearer
 from typing import Union
-from fastapi import HTTPException, status, Request
-from backend.models.user import MongoUser as User
 
+import jwt
+from fastapi import HTTPException, Request, status
+from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
+
+from backend.models.user import MongoUser as User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -1,10 +1,11 @@
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException
+
 from backend.models.todo import Todo, UpdateTodo
 from backend.models.user import MongoUser as User
-from fastapi import APIRouter, HTTPException, Depends
-from typing import Annotated
-from backend.util.util import get_todo
 from backend.util.auth_util import get_current_user
-
+from backend.util.util import get_todo
 
 router = APIRouter(
     prefix="/todo",

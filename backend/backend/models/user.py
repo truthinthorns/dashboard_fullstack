@@ -1,6 +1,7 @@
-from beanie import Document, Indexed, PydanticObjectId, Indexed
-from pydantic import BaseModel, Field, EmailStr, ConfigDict, ConfigDict
-from typing import Optional, List, Annotated, Annotated
+from typing import Annotated, List, Optional
+
+from beanie import Document, Indexed, PydanticObjectId
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class RecoveryQuestions(BaseModel):
@@ -35,7 +36,8 @@ class BaseUser(BaseModel):
         description="A list of recovery questions the User can use to recover their info.",
     )
     creation_method: Optional[str] = Field(
-        default=None, description="The method used to create this User.",
+        default=None,
+        description="The method used to create this User.",
     )
 
 
@@ -44,7 +46,7 @@ class CreateUser(BaseUser):
     password: str = Field(
         description="The RAW password for the User! Should hashed before insert into MongoDB!",
         min_length=8,
-        max_length=48
+        max_length=48,
     )
 
     model_config = ConfigDict(
@@ -66,7 +68,7 @@ class MongoUser(Document, BaseUser):
         example="password",
         description="The HASHED password for the User. Should NOT be the user's raw input!",
     )
-    
+
 
 class UpdateUser(BaseModel):
     username: Optional[str] = Field(
@@ -92,12 +94,14 @@ class UpdateUser(BaseModel):
     )
 
     model_config = ConfigDict(
-        json_schema_extra = {
+        json_schema_extra={
             "example": {
                 "username": "username",
                 "email": "test@example.com",
                 "password": "password",
-                "recovery_questions": [{"question": "What color is the sky?", "answer": "Blue"}],
+                "recovery_questions": [
+                    {"question": "What color is the sky?", "answer": "Blue"}
+                ],
             }
         }
     )

@@ -1,7 +1,8 @@
-from beanie import Document, PydanticObjectId
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional, List
 from datetime import datetime, timedelta
+from typing import List, Optional
+
+from beanie import Document, PydanticObjectId
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Todo(Document):

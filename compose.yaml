@@ -1,10 +1,11 @@
 services:
   mongo:
     image: mongo
-    container_name: mongodb
+    container_name: mongo
     restart: always
-    env_file:
-      - ./envs/mongo.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
 
   mongo-express:
     image: mongo-express
@@ -12,8 +13,6 @@ services:
     restart: always
     ports:
       - "8081:8081"
-    env_file:
-      - ./envs/mongo.env
     environment:
       - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/
     depends_on:
@@ -21,7 +20,10 @@ services:
 
   backend:
     build:
-      context: ./dashboard_backend
+      args:
+        MONGO_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        MONGO_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      context: ./backend
       dockerfile: Dockerfile
     container_name: backend
     ports:
@@ -34,7 +36,7 @@ services:
       args:
         VITE_API_URL: http://localhost:5000
         VITE_WEATHER_URL: https://api.weather.gov
-      context: ./dashboard2
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: frontend
     ports:

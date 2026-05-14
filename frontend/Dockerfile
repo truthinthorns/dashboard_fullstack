@@ -1,3 +1,5 @@
+# COPIED FROM https://docs.docker.com/guides/vuejs/containerize/
+
 # =========================================
 # Stage 1: Build the Vue.js Application
 # =========================================

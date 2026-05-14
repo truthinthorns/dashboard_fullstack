@@ -1,18 +1,20 @@
-import requests
-from fastapi.encoders import jsonable_encoder
-from fastapi import HTTPException
-from backend.models.weather import Weather
-from backend.models.user import MongoUser as User
-from backend.models.todo import Todo
 from datetime import datetime
+
+import requests
 from beanie import PydanticObjectId
+from fastapi import HTTPException
+from fastapi.encoders import jsonable_encoder
+
+from backend.models.todo import Todo
+from backend.models.user import MongoUser as User
+from backend.models.weather import Weather
 
 
 def hourly_forecast_formatter(coords: str):
     try:
         result = requests.get(f"https://api.weather.gov/points/{coords}").json()
-        hourly = requests.get(result["properties"]["forecastHourly"]).json()
-        hourly_json = jsonable_encoder(hourly["properties"]["periods"])
+        hourly = requests.get(result.get("properties").get("forecastHourly")).json()
+        hourly_json = jsonable_encoder(hourly.get("properties").get("periods"))
     except Exception as e:
         raise HTTPException(
             status_code=400,
