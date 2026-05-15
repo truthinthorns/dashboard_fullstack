@@ -8,7 +8,7 @@ export const useUserStore = defineStore("user", {
   }),
   actions: {
     async signup(user: User) {
-      const response = await fetch(`${import.meta.env.VITE_ROOT_API}/users`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,12 +19,10 @@ export const useUserStore = defineStore("user", {
       if (!response.ok) {
         return false;
       }
-      const responseUser = await response.json();
-      if (await this.login(responseUser.username, responseUser.password) === true)
-        return true;
+      return true;
     },
     async login(username: string, password: string) {
-      const response = await fetch(`${import.meta.env.VITE_ROOT_API}/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -50,7 +48,7 @@ export const useUserStore = defineStore("user", {
       return true;
     },
     async logout() {
-      const response = await fetch(`${import.meta.env.VITE_ROOT_API}/auth/logout`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include'
       });

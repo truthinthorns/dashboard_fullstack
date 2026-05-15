@@ -45,7 +45,7 @@ export default router
 
 async function isAuthenticated() {
   try {
-    const response = await fetch(`${import.meta.env.VITE_ROOT_API}/auth/me`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
       method: 'GET',
       credentials: 'include'
     });
@@ -56,7 +56,7 @@ async function isAuthenticated() {
 }
 
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   if (to.meta.requiresAuth) {
     const loggedIn = await isAuthenticated();
 

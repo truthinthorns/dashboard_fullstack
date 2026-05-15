@@ -26,7 +26,7 @@ UserNotFound = {
         "This endpoint will create a new User using the info that is passed in,"
         "then it will return it with the new Mongo ID included."
     ),
-    response_model=MongoUser,
+    response_model=dict,
     status_code=200,
 )
 async def add_user(user: CreateUser):
@@ -34,7 +34,12 @@ async def add_user(user: CreateUser):
         user.password = get_password_hash(user.password)
         mongo_user = MongoUser(**user.model_dump())
         new_user = await mongo_user.create()
-        return new_user
+        dict_user = new_user.model_dump()
+        del dict_user["password"]
+        del dict_user["recovery_questions"]
+        del dict_user["creation_method"]
+        dict_user["id"] = str(dict_user["id"])
+        return dict_user
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"An error occurred: {str(e)}")
 
@@ -80,7 +85,7 @@ async def delete_all_users(_: Annotated[MongoUser, Depends(get_current_user)]):
     description=(
         "This endpoint will return the User dictionary based on the passed in id."
     ),
-    response_model=MongoUser,
+    response_model=dict,
     status_code=200,
     responses={404: UserNotFound},
 )
@@ -88,7 +93,12 @@ async def get_user(
     _: Annotated[MongoUser, Depends(get_current_user)],
     user: MongoUser = Depends(get_user),
 ):
-    return user.model_dump()
+    dict_user = user.model_dump()
+    del dict_user["password"]
+    del dict_user["recovery_questions"]
+    del dict_user["creation_method"]
+    dict_user["id"] = str(dict_user["id"])
+    return dict_user
 
 
 @router.put(
@@ -98,7 +108,7 @@ async def get_user(
         "This endpoint will try to find a User with the passed in id,"
         "then update and return the updated dictionary."
     ),
-    response_model=MongoUser,
+    response_model=dict,
     status_code=200,
     responses={404: UserNotFound},
 )
@@ -119,7 +129,12 @@ async def update_user(
         raise e
     try:
         updated_user = await user.update({"$set": update})
-        return updated_user.model_dump()
+        dict_user = updated_user.model_dump()
+        del dict_user["password"]
+        del dict_user["recovery_questions"]
+        del dict_user["creation_method"]
+        dict_user["id"] = str(dict_user["id"])
+        return dict_user
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unable to update user: {str(e)}")
 

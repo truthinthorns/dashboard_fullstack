@@ -1,4 +1,4 @@
-export default class WeeklyForecast {
+export default class HourlyForecast {
   number: number;
   start_time: String;
   end_time: String;

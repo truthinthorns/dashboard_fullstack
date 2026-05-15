@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
 
-from backend.models.weather import Weather
+from backend.models.weather_response import WeatherResponse
 from backend.util.util import hourly_forecast_formatter
 
 router = APIRouter(
@@ -15,7 +15,7 @@ router = APIRouter(
     description=(
         "This endpoint returns the hourly forecast for the coordinates provided."
     ),
-    response_model=list[Weather],
+    response_model=WeatherResponse,
     status_code=200,
 )
 async def get_hourly_forecast(
@@ -31,4 +31,5 @@ async def get_hourly_forecast(
     try:
         return hourly_forecast_formatter(coords.replace(" ", ""))
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"An error occurred: {str(e)}")
+        raise HTTPException(
+            status_code=400, detail=f"An error occurred: {str(e)}")

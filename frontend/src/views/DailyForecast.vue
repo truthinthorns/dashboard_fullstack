@@ -19,7 +19,7 @@
                             <th scope="row" class="text-center"><b>{{ formatTime(forecast.start_time) }}</b></th>
                             <td class="text-center">{{ forecast.temperature }}&#176;F</td>
                             <td class="text-center">{{ forecast.chance_of_rain }}%</td>
-                            <td class="text-center">{{ forecast.wind_speed }} {{ forecast.wind_direction }}</td>
+                            <td class="text-center">{{ forecast.wind_direction }}{{ forecast.wind_speed }}</td>
                             <td class="text-center">{{ forecast.short_forecast }}</td>
                         </tr>
                     </tbody>

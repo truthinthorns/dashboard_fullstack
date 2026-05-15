@@ -20,4 +20,8 @@ navigator.geolocation.getCurrentPosition(locationAllowed);
   </div>
 </template>
 
-<style></style>
+<style scoped>
+  .background {
+    background-color: #f8fafc;
+  }
+</style>
